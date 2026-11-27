@@ -1,4 +1,3 @@
-using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Recept.Services;
@@ -72,18 +71,20 @@ public class MealPlanController : AppController
             TempData["Error"] = ex.Message;
         }
 
-        DateTime day = date.Value.ToDateTime(TimeOnly.MinValue);
-        return RedirectToAction(nameof(Index), new { year = ISOWeek.GetYear(day), week = ISOWeek.GetWeekOfYear(day) });
+        (int year, int week) = WeekHelper.GetYearAndWeek(date.Value);
+        return RedirectToAction(nameof(Index), new { year, week });
     });
 
     // Utan val visas innevarande vecka. Veckan börjar på måndag (ISO 8601).
     private static WeekViewModel CreateWeek(int? year, int? week)
     {
-        DateTime today = DateTime.Today;
+        (int currentYear, int currentWeek) = WeekHelper.GetYearAndWeek(DateOnly.FromDateTime(DateTime.Today));
+        int selectedYear = year ?? currentYear;
+
         return new WeekViewModel
         {
-            Year = year ?? ISOWeek.GetYear(today),
-            Week = Math.Clamp(week ?? ISOWeek.GetWeekOfYear(today), 1, 53),
+            Year = selectedYear,
+            Week = Math.Clamp(week ?? currentWeek, 1 , WeekHelper.GetWeeksInYear(selectedYear))
         };
     }
 
