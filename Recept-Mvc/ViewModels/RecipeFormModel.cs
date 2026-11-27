@@ -18,10 +18,18 @@ public class RecipeFormModel : IValidatableObject
     [Range(1, 100, ErrorMessage = "Antal portioner måste vara mellan 1 och 100.")]
     public int Servings { get; set; } = 4;
 
+    [Display(Name = "Kategori")]
+    [Range(1, int.MaxValue, ErrorMessage = "Välj en kategori.")]
+    public int CategoryId { get; set; }
+
+    [Display(Name = "Kock")]
+    [Range(1, int.MaxValue, ErrorMessage = "Välj en kock.")]
+    public int ChefId { get; set; }
+
+    [Display(Name = "Anteckning")]
+    public string? Note { get; set; }
     public List<IngredientRow> Ingredients { get; set; } =
         Enumerable.Range(0, IngredientRows).Select(_ => new IngredientRow()).ToList();
-
-    // Du behöver bygga ut detta mer: kategori, kock och anteckning när modellen Recipe har de fälten.
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
@@ -52,6 +60,9 @@ public class RecipeFormModel : IValidatableObject
     {
         Name = Name.Trim(),
         Servings = Servings,
+        CategoryId = CategoryId,
+        ChefId = ChefId,
+        Note = string.IsNullOrWhiteSpace(Note) ? null : Note.Trim(),
         Ingredients = Ingredients
             .Where(row => !row.IsEmpty)
             .Select(row => new Ingredient { Name = row.Name!.Trim(), Amount = row.Amount!.Value, Unit = row.Unit!.Trim() })
