@@ -10,14 +10,7 @@ public class SwedishDisplayNames : IDisplayMetadataProvider
 {
     private static readonly Dictionary<string, string> Names = new()
     {
-        ["FirstName"] = "Förnamn",
-        ["LastName"] = "Efternamn",
-        ["BirthDate"] = "Födelsedatum",
-        ["HairColor"] = "Hårfärg",
-        ["HeightCm"] = "Längd i cm",
-        ["Religion"] = "Religion",
-        ["Position"] = "Position",
-        ["TeamId"] = "Lag",
+        ["FirstName"] = "Förnamn"
     };
 
     public void CreateDisplayMetadata(DisplayMetadataProviderContext context)

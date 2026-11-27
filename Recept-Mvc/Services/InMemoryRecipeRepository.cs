@@ -52,7 +52,7 @@ public class InMemoryRecipeRepository : IRecipeRepository
     // lättare att läsa om det byggs steg för steg, till exempel .WithIngredient("mjölk", 6, "dl").
     private void Seed()
     {
-        AddChef(new Chef { FirstName = "Kim", LastName = "Exempelsson" });
+        AddChef(new Chef { FirstName = "Kim"});
 
         AddRecipe(new Recipe
         {
