@@ -1,7 +1,7 @@
 namespace Recept.Models;
 
 /// <summary>
-/// Ett recept. Minimal modell: bara det som README:n kräver.
+/// Ett recept med ingredienser, kategori, kock och valfri anteckning.
 /// </summary>
 public class Recipe
 {
@@ -10,7 +10,11 @@ public class Recipe
     public int Servings { get; set; }
     public List<Ingredient> Ingredients { get; set; } = new();
 
-    // Du behöver bygga ut detta mer.
-    // Beställningen kräver kategori, en valfri anteckning och vilken kock som skapat receptet.
-    // När ni lägger till fälten: uppdatera även formuläret i Views/Recipes/Create.cshtml så att användaren kan fylla i dem.
+    public int CategoryId { get; set; }
+    public Category? Category { get; set; }
+
+    public int ChefId { get; set; }
+    public Chef? Chef { get; set; }
+
+    public string? Note { get; set; }
 }
