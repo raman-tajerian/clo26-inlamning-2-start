@@ -1,4 +1,3 @@
-using System.Globalization;
 using Recept.Models;
 
 namespace Recept.Services;
@@ -18,7 +17,7 @@ public class MealPlanService : IMealPlanService
     // ISOWeek räknar veckonummer med måndag som första dag (önskemål 2).
     public List<PlannedMeal> GetWeekPlan(int year, int weekNumber)
     {
-        DateOnly monday = DateOnly.FromDateTime(ISOWeek.ToDateTime(year, weekNumber, DayOfWeek.Monday));
+        DateOnly monday = WeekHelper.GetMonday(year, weekNumber);
         return
         [
             new PlannedMeal { Id = 1, Date = monday, RecipeId = 2 },

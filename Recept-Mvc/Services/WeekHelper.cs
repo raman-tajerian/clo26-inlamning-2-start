@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
 namespace Recept.Services
 {
+    //All veckologik ligger här så veckan börjar på måndag.
+    //Använder ISOWeek då den alltid börjar på måndag oavsett dator.
     public static class WeekHelper
     {
         public static DateOnly GetMonday(int year, int week)
@@ -18,6 +20,11 @@ namespace Recept.Services
         {
             (int year, int week) = GetYearAndWeek(date);
             return GetMonday(year, week);
+        }
+        //för att slippa anropa ISOweek direkt
+        public static int GetWeeksInYear(int year)
+        {
+            return ISOWeek.GetWeeksInYear(year);
         }
     }
 }
