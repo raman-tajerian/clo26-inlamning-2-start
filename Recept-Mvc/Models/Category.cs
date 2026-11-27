@@ -1,14 +1,19 @@
 namespace Recept.Models;
 
 /// <summary>
-/// En receptkategori, till exempel "Middag" eller "Efterrätt".
+/// En receptkategori, till exempel "Middag", "Efterrätt" eller "Övrigt"
 /// </summary>
 public class Category
 {
+    public const string DefaultOtherName = "Övrigt";
     public int Id { get; set; }
     public string Name { get; set; } = "";
 
-    // Du behöver bygga ut detta mer.
-    // Beställningen kräver en gräns för hur många gånger per vecka kategorin får förekomma,
-    // och att "Övrigt" aldrig kan tas bort.
+    // Hur många gånger per vecka kategorin får förekomma i veckoplan (null = ingen gräns satt)
+    public int? WeeklyLimit { get; set; }
+
+    public bool IsDefaultOther =>
+        string.Equals(Name?.Trim(), DefaultOtherName, StringComparison.OrdinalIgnoreCase);
+
+    public bool CanBeDeleted() => !IsDefaultOther;
 }
